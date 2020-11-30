@@ -1,16 +1,16 @@
-from os import walk
+import os
 from playsound import playsound
 from random import randrange
 import tkinter as tk
 from PIL import Image, ImageTk
 
 clear = input("Would you like to clear played files? [y/N] ")
-if clear.lower() == "y":
+if clear.lower() == "y" or not os.path.exists("played"):
     with open("played", "w") as f:
-        f.write("")
+        pass
 
 DIRECTORY = "recordings"
-_, _, files = next(walk(DIRECTORY))
+_, _, files = next(os.walk(DIRECTORY))
 
 lastindex = None
 
