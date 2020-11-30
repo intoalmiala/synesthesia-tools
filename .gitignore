@@ -1,5 +1,6 @@
-# played files list
+# played files list and colors list
 played
+colors.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
