@@ -3,5 +3,6 @@ if clear.lower() == "y":
     with open("played", "w") as f:
         print("Played files cleared.")
     with open("colors.json", "w") as f:
+        f.write("{}")
         print("Saved colors cleared.")
 
