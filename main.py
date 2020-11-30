@@ -4,13 +4,12 @@ from random import randrange
 import tkinter as tk
 from PIL import Image, ImageTk
 
-clear = input("Would you like to clear played files? [y/N] ")
-if clear.lower() == "y" or not os.path.exists("played"):
-    with open("played", "w") as f:
-        pass
-
 DIRECTORY = "recordings"
 _, _, files = next(os.walk(DIRECTORY))
+
+if not os.path.exists("played"):
+    with open("played", "w") as f:
+        print("Created file 'played' for tracking played files.")
 
 lastindex = None
 
