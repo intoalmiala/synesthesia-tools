@@ -1,0 +1,13 @@
+import speech_recognition as sr
+import os
+
+r = sr.Recognizer()
+
+for filename in os.listdir(os.getcwd()):
+	if filename.endswith(".wav"):
+		audiofile = sr.AudioFile(filename)
+		with audiofile as source:
+			audio = r.record(source)
+		
+		print(filename, r.recognize_google(audio, language="fi"))
+
