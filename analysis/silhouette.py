@@ -1,11 +1,17 @@
+import json
+import sys
+from functools import reduce
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 import numpy as np
 
-# dataset creation
-from sklearn import datasets
-iris = datasets.load_iris()
-X = iris.data[:, :3]
+INPUT_FILE = sys.argv[1]
+#OUTPUT_FILE = sys.argv[2]
+
+with open(INPUT_FILE) as f:
+    X = np.array(reduce(lambda x, y: x+y, json.load(f).values(), []))
+
+colors = np.array([tuple(map(lambda x: x/255, X[i])) for i in range(len(X))])
 
 max_n_clusters = 10
 scores = [0 for _ in range(max_n_clusters+1)]
@@ -27,12 +33,22 @@ print(f"Best cluster amount was {best_n} with a score of {best_score}.")
 kmeans = KMeans(n_clusters = best_n)
 kmeans.fit(X)
 
-# plot drawing
+cluster_colors = kmeans.cluster_centers_/255
+
+# Plot drawing
 import matplotlib.pyplot as plt
 
 fig = plt.figure()
-axes = plt.axes(projection = "3d")
 
-axes.scatter(X[:,0], X[:,1], X[:,2], c = kmeans.labels_)
+# For plotting only cluster colors
+ax = plt.axes(projection = "3d")
+ax.scatter(X[:,0], X[:,1], X[:,2], c = cluster_colors[kmeans.labels_])
+
+# For plotting cluster colors and true colors side by side
+#ax1 = fig.add_subplot(1, 2, 1, projection = "3d")
+#ax1.scatter(X[:,0], X[:,1], X[:,2], c = cluster_colors[kmeans.labels_])
+#
+#ax2 = fig.add_subplot(1, 2, 2, projection = "3d")
+#ax2.scatter(X[:,0], X[:,1], X[:,2], c = colors)
 
 plt.show()
