@@ -2,7 +2,6 @@ import json
 import sys
 from functools import reduce
 from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
 import numpy as np
 
 INPUT_FILE = sys.argv[1]
