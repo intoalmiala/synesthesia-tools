@@ -31,6 +31,7 @@ with open(OUTPUT_FILE) as f:
 # For keeping track of last recording and colors for it
 lastindex = None
 colorlist = []
+lastevent = None
 
 # Play random recording
 def play(event):
@@ -48,12 +49,14 @@ def play(event):
         lastindex = index
     else:
         print("All files played.")
+    lastevent = "play"
 
 # Get color from image on left click and play next recording
 def getcolor(event):
     if not lastindex is None:
         value = img.getpixel((event.x, event.y))[:3]
         colorlist.append(value)
+    lastevent = "getcolor"
 
 # Write data and close window on exit
 def onexit():
@@ -69,8 +72,8 @@ img_tk = ImageTk.PhotoImage(img)
 label = tk.Label(root, image = img_tk)
 label.pack()
 root.resizable(False, False)
-root.bind("<Button 1>", getcolor)
-root.bind("<Button 3>", play)
+root.bind("<Button 1>", getcolor)   # Left click
+root.bind("<Button 3>", play)       # Right click
 root.protocol("WM_DELETE_WINDOW", onexit)
 
 root.mainloop()
