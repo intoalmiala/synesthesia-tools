@@ -1,22 +1,18 @@
 import os
 import json
-from playsound import playsound
 from random import randrange
+from playsound import playsound
 import tkinter as tk
 from PIL import Image, ImageTk
 
 DIRECTORY = "recordings"
 _, _, files = next(os.walk(DIRECTORY))
 
-if not os.path.exists("played"):
-    with open("played", "w") as f:
-        print("Created file 'played' for tracking played files.")
 if not os.path.exists("colors.json"):
     with open("colors.json", "w") as f:
+        json.dump({}, f, ensure_ascii=False)
         print("Created file 'colors.json' for recording colors.")
 
-with open("played") as f:
-    played = list(map(lambda x: x.strip(), f.readlines()))
 with open("colors.json") as f:
     colors = json.load(f)
 
@@ -26,7 +22,7 @@ def play():
     global lastindex
     if len(files):
         index = randrange(len(files))
-        while files[index] in played:
+        while files[index] in colors:
             index = randrange(len(files))
         playsound(f"{DIRECTORY}/{files[index]}")
         lastindex = index
@@ -34,19 +30,15 @@ def play():
         print("All files played.")
 
 def getcolor(event):
-    #global played, colors
     if not lastindex is None:
         value = img.getpixel((event.x, event.y))[:3]
-        played.append(files[lastindex]+"\n")
         colors[files[lastindex]] = value
         files.pop(lastindex)
     play()
 
 def onexit():
-    with open("played", "w") as f:
-        f.writelines(played)
     with open("colors.json", "w") as f:
-        json.dump(colors, f)
+        json.dump(colors, f, ensure_ascii=False)
     root.destroy()
 
 root = tk.Tk()
