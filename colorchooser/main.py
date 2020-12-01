@@ -1,9 +1,14 @@
+import sys
 import os
 import json
 from random import randrange
 from playsound import playsound
 import tkinter as tk
 from PIL import Image, ImageTk
+
+
+# Command line arguments
+SIZE = tuple(map(int, sys.argv[1].split("x"))) if len(sys.argv) > 1 else (640, 640)
 
 
 # I/O files
@@ -67,7 +72,7 @@ def onexit():
 
 # Configure window
 root = tk.Tk()
-img = Image.open(COLOR_IMAGE).resize((640,640))
+img = Image.open(COLOR_IMAGE).resize(SIZE)
 img_tk = ImageTk.PhotoImage(img)
 label = tk.Label(root, image = img_tk)
 label.pack()
