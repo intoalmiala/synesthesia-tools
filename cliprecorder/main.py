@@ -1,5 +1,3 @@
-# This program uses code from: https://python-sounddevice.readthedocs.io/en/0.4.1/examples.html#recording-with-arbitrary-duration
-
 import sys
 
 import sounddevice as sd
@@ -25,10 +23,13 @@ CHANNELS = 1
 BLOCKSIZE = 512
 
 
+# Keeping track of current word
 word_index = 0
 word_text = words[0]
 filepath = f"{OUTPUT_DIRECTORY}/{word_text}.wav"
 
+
+# Global variables for recording
 recording = False
 stream = None
 soundfile = None
@@ -55,7 +56,6 @@ def record():
         stream.close()
         soundfile.close()
 
-
 def play():
     playsound(filepath)
 
@@ -79,11 +79,11 @@ def next_word():
 # Key event handler
 def key_event(event):
     key = event.char
-    if key == "j":
+    if key == "j":   # Press J to record and stop
         record_button.invoke()
-    elif key == "k":
+    elif key == "k": # Press K to play recording
         play_button.invoke()
-    elif key == "l":
+    elif key == "l": # Press L to go to next word
         next_button.invoke()
 
 # Configure window
@@ -102,4 +102,3 @@ play_button.pack(side=tk.LEFT)
 next_button.pack(side=tk.LEFT)
 
 root.mainloop()
-
