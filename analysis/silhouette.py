@@ -1,10 +1,12 @@
 import sys
 import json
 from functools import reduce
+
 import numpy as np
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 import matplotlib.pyplot as plt
+
 
 # Command line arguments
 INPUT_FILE = sys.argv[1]
