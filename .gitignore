@@ -1,6 +1,7 @@
-# played files list and colors list
-played
+# program storage files
 colors.json
+words.txt
+recordings/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

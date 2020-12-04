@@ -40,21 +40,21 @@ def callback(indata, frames, time, status):
         print(status, file=sys.stderr)
     soundfile.write(indata.copy())
 
-def start_recording():
-    global recording, stream, soundfile
+def record():
+    global recording, stream, soundfile, record_button
     if not recording:
         recording = True
+        record_button.config(text="stop")
         stream = sd.InputStream(samplerate=SAMPLERATE, blocksize=BLOCKSIZE, channels=CHANNELS, callback=callback)
         soundfile = sf.SoundFile(filepath, "w", SAMPLERATE, CHANNELS)
         stream.start()
-
-def stop_recording():
-    global recording
-    if recording:
+    else:
         recording = False
+        record_button.config(text="record")
         stream.stop()
         stream.close()
         soundfile.close()
+
 
 def play():
     playsound(filepath)
@@ -65,9 +65,8 @@ def next_word():
     global word_index, word_text, filepath
     word_index += 1
     if word_index == len(words):
-        word_label.config(text="ALL WORDS RECORDED")
+        word_label.config(text="DONE")
         record_button.pack_forget()
-        stop_button.pack_forget()
         play_button.pack_forget()
     elif word_index > len(words):
         root.destroy()
@@ -77,20 +76,30 @@ def next_word():
         word_label.config(text=word_text)
 
 
+# Key event handler
+def key_event(event):
+    key = event.char
+    if key == "j":
+        record_button.invoke()
+    elif key == "k":
+        play_button.invoke()
+    elif key == "l":
+        next_button.invoke()
+
 # Configure window
 root = tk.Tk()
+word_label = tk.Label(root, text=word_text, font=("",24))
 
-word_label = tk.Label(root, text=word_text)
-record_button = tk.Button(text="start", command=start_recording)
-stop_button = tk.Button(text="stop", command=stop_recording)
+record_button = tk.Button(text="record", command=record)
 play_button = tk.Button(text="play", command=play)
 next_button = tk.Button(text="next", command=next_word)
 
+root.bind("<Key>", key_event)
+
 word_label.pack()
-record_button.pack()
-stop_button.pack()
-play_button.pack()
-next_button.pack()
+record_button.pack(side=tk.LEFT)
+play_button.pack(side=tk.LEFT)
+next_button.pack(side=tk.LEFT)
 
 root.mainloop()
 
