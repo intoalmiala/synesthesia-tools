@@ -1,18 +1,9 @@
-# tukoke2021
-This code plays audio files one by one and waits for the user to choose a color for the recording.
+# Tools for synesthesia research 
 
-## Dependencies
-* `python3`
-    * `tkinter`
-    * `PIL`
-    * `playsound`
+This is a repository links to the repositories of various programs for researching synesthesia. All of the programs were made for a study for the [Tutki Kokeile Kehitä 2021 competition](https://tukoke.tek.fi/). The programs are as follows:
 
-All of the python libraries are available via `pip3` using the following command.
-```
-pip3 install tkinter pillow playsound
-```
+* [analysis](https://github.com/intoalmiala/tukoke2021-analysis): code used to process and analyze our data in order to get meaningful results
+* [colorpicker](https://github.com/intoalmiala/tukoke2021-colorpicker): a program that plays audio files and takes color inputs from the user for each file
+* [recorder](https://github.com/intoalmiala/tukoke2021-recorder): a program for efficiently recording a large amount of audio files
 
-## Usage
-To start the program, run `python main.py`. This opens up a window with a color picker. When you first click on the window, the first audio file is played. Then you are to click on a color that best fits the played audio clip. When you feel like done, just close the window normally; the recordings you have given a color are saved in the file `played` and the colors in the file `color.json`.
-
-If you want to start over or the programs gives an error, you can run `python clear.py`. This will clear the played files and the recorded colors. The program asks you if you want to clear them. By entering `y`, all of the data is cleared irreversibly.
+Details on usage and functionality are provided in each tool's own repository.
